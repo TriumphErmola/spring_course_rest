@@ -21,20 +21,20 @@ public class MyConfig {
 
     @Bean
     public DataSource dataSource() {
-        ComboPooledDataSource dataSourse = new ComboPooledDataSource();
+        ComboPooledDataSource dataSource = new ComboPooledDataSource();
         try {
-            dataSourse.setDriverClass("com.mysql.cj.jdbc.Driver");
-            dataSourse.setJdbcUrl("jdbc:mysql://localhost:3306/my_db?useSSL=false");
-            dataSourse.setUser("bestuser");
-            dataSourse.setPassword("bestuser");
+            dataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
+            dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/my_db?useSSL=false");
+            dataSource.setUser("bestuser");
+            dataSource.setPassword("bestuser");
         } catch (PropertyVetoException e) {
             e.printStackTrace();
         }
-        return dataSourse;
+        return dataSource;
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactor() {
+    public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("com.andreyermolenko.spring.rest.entity");
@@ -50,7 +50,7 @@ public class MyConfig {
     public HibernateTransactionManager transactionManager(){
         HibernateTransactionManager transactionManager =
                 new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactor().getObject());
+        transactionManager.setSessionFactory(sessionFactory().getObject());
         return transactionManager;
     }
 
